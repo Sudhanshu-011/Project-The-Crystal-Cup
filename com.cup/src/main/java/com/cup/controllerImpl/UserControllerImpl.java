@@ -8,7 +8,6 @@ import com.cup.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -54,4 +53,51 @@ public class UserControllerImpl implements UserController {
         }
         return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @Override
+    public ResponseEntity<String> update(Map<String, String> requestMap) {
+        try {
+            return this.userService.update(requestMap);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return CupUtils.getResponseEntity(CupConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseEntity<String> checkToken() {
+        try {
+            return this.userService.checkToken();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return CupUtils.getResponseEntity(CupConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseEntity<String> updatePassword(Map<String, String> requestMap) {
+        try {
+            return this.userService.changePassword(requestMap);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return CupUtils.getResponseEntity(CupConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseEntity<String> forgotPassword(Map<String, String> requestMap) {
+        try {
+            return this.userService.forgotPassword(requestMap);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return CupUtils.getResponseEntity(CupConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+
 }

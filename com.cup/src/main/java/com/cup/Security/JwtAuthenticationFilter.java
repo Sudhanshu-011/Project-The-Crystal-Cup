@@ -78,7 +78,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         return "user".equalsIgnoreCase((String) this.claims.get("role"));
     }
 
-    public String getUsername() {
+    public String getCurrentUser() {
         return this.username;
     }
 }
