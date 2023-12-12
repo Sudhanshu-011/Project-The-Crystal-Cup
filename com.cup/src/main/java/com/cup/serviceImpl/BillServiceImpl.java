@@ -4,7 +4,9 @@ import com.cup.Constants.CupConstants;
 import com.cup.Security.JwtAuthenticationFilter;
 import com.cup.Utils.CupUtils;
 import com.cup.entities.Bill;
+import com.cup.entities.User;
 import com.cup.repositories.BillRepo;
+import com.cup.repositories.UserRepo;
 import com.cup.service.BillService;
 import com.google.common.math.Quantiles;
 import com.itextpdf.text.*;
@@ -39,6 +41,9 @@ public class BillServiceImpl implements BillService {
 
     @Autowired
     private JwtAuthenticationFilter filter;
+
+    @Autowired
+    private UserRepo userRepo;
 
     @Override
     public ResponseEntity<String> generateReport(Map<String, Object> requestMap) {
@@ -165,13 +170,15 @@ public class BillServiceImpl implements BillService {
         try {
             Bill bill = new Bill();
             bill.setUuid((String) requestMap.get("uuid"));
-            bill.setName((String) requestMap.get("name"));
-            bill.setEmail((String) requestMap.get("email"));
-            bill.setContactNumber((String) requestMap.get("contactNumber"));
             bill.setPaymentMethod((String) requestMap.get("paymentMethod"));
             bill.setTotal(Integer.parseInt((String) requestMap.get("totalAmount")));
             bill.setProductDetail((String) requestMap.get("productDetails"));
             bill.setCreatedBy(this.filter.getCurrentUser());
+            System.out.println(this.filter.getCurrentUser());
+            User user = this.userRepo.findByEmail(this.filter.getCurrentUser());
+            bill.setName((String) requestMap.get(user.getName()));
+            bill.setEmail((String) requestMap.get(user.getEmail()));
+            bill.setContactNumber((String) requestMap.get(user.getContactNumber()));
             this.billRepo.save(bill);
         }
         catch (Exception e) {

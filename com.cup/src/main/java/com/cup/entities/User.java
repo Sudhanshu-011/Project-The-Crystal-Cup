@@ -13,7 +13,7 @@ import java.io.Serial;
 import java.io.Serializable;
 
 @NamedQuery(name = "User.findByEmailId", query = "SELECT u FROM User u WHERE u.email = :email")
-@NamedQuery(name = "User.getAllUser", query = "SELECT NEW com.cup.Wrapper.UserWrapper(u.id, u.name, u.contactNumber, u.email, u.role) FROM User u WHERE u.role = 'user'")
+@NamedQuery(name = "User.getAllUser", query = "SELECT NEW com.cup.Wrapper.UserWrapper(u.id, u.name, u.email, u.contactNumber, u.status) FROM User u WHERE u.role = 'user'")
 @NamedQuery(name = "User.updateStatus", query = "UPDATE User u SET u.status = :status WHERE u.id = :id")
 @NamedQuery(name = "User.getAllAdmin", query = "SELECT u.email FROM User u WHERE u.role = 'admin' ")
 

@@ -13,7 +13,7 @@ import java.io.Serializable;
 
 @NamedQuery(name = "Product.getAllProduct", query = "SELECT new com.cup.Wrapper.ProductWrapper(p.id, p.name, p.description, p.price, p.status, p.category.id, p.category.name) FROM Product p")
 
-@NamedQuery(name = "Product.getProductByCategory", query = "SELECT new com.cup.Wrapper.ProductWrapper(p.id, p.name) FROM Product p WHERE p.category.id = :id and p.status = 'true' ")
+@NamedQuery(name = "Product.getProductByCategory", query = "SELECT new com.cup.Wrapper.ProductWrapper(p.id, p.name, p.description, p.price) FROM Product p WHERE p.category.id = :id and p.status = 'true' ")
 
 @Entity
 @Setter

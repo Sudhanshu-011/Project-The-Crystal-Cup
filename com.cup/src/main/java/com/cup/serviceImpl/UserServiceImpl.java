@@ -142,9 +142,9 @@ public class UserServiceImpl implements UserService {
                 if (optionalUser.isPresent()) {
                     this.userRepo.updateStatus(requestMap.get("status"), Integer.parseInt(requestMap.get("id")));
                     log.info("Initiating mailing process...");
-                    // List<String> allAdmin = this.userRepo.getAllAdmin();
-                    // allAdmin.add(optionalUser.get().getEmail());
-                    this.sendMailToAllAdmin(requestMap.get("status"), optionalUser.get().getEmail(), this.userRepo.getAllAdmin());
+                     List<String> allAdmin = this.userRepo.getAllAdmin();
+                     allAdmin.add(optionalUser.get().getEmail());
+                    this.sendMailToAllAdmin(requestMap.get("status"), optionalUser.get().getEmail(), allAdmin);
                     System.out.println("List of all admins: "+ this.userRepo.getAllAdmin());
                     return CupUtils.getResponseEntity("User status updated successfully", HttpStatus.OK);
                 }

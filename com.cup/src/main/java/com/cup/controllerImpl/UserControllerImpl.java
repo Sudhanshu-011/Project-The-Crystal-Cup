@@ -1,24 +1,36 @@
 package com.cup.controllerImpl;
 
 import com.cup.Constants.CupConstants;
+import com.cup.Security.CustomUserDetailService;
+import com.cup.Security.JwtAuthenticationFilter;
 import com.cup.Utils.CupUtils;
 import com.cup.Wrapper.UserWrapper;
 import com.cup.controller.UserController;
+import com.cup.entities.User;
 import com.cup.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 @RestController
+@CrossOrigin("*")
 public class UserControllerImpl implements UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private CustomUserDetailService service;
+
+    @Autowired
+    private JwtAuthenticationFilter filter;
 
     @Override
     public ResponseEntity<String> signUp(Map<String, String> requestMap) {
@@ -99,5 +111,11 @@ public class UserControllerImpl implements UserController {
         return CupUtils.getResponseEntity(CupConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @Override
+    public User getCurrentUser(Principal principal)
+        {
+            System.out.println(this.filter.getCurrentUser());
+            return (User)this.service.loadUserByUsername(this.filter.getCurrentUser());
+        }
 
 }

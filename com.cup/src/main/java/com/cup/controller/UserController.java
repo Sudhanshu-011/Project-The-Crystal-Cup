@@ -1,10 +1,14 @@
 package com.cup.controller;
 
+import com.cup.Security.CustomUserDetailService;
 import com.cup.Wrapper.UserWrapper;
+import com.cup.entities.User;
 import com.google.common.annotations.VisibleForTesting;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
@@ -33,4 +37,7 @@ public interface UserController {
 
     @PostMapping("/forgotPassword")
     public ResponseEntity<String> forgotPassword(@RequestBody Map<String, String> requestMap);
+
+    @GetMapping("/current-user")
+    public User getCurrentUser(Principal principal);
 }

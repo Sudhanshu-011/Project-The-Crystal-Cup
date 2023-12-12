@@ -43,7 +43,7 @@ public class SecurityConfig {
         http.cors(Customizer.withDefaults())
                 .csrf(csrf -> csrf.disable())
                 .authorizeRequests()
-                .requestMatchers("/user/signUp","/user/login", "/user/forgotPassword").permitAll()
+                .requestMatchers("/user/signUp","/user/login", "/user/forgotPassword", "/user/current-user").permitAll()
                 .anyRequest().authenticated()
                 .and().exceptionHandling(ex -> ex.authenticationEntryPoint(point))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
